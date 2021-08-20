@@ -1,0 +1,31 @@
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: PodPreset
+metadata:
+  name: hive-job-provision
+spec:
+  env:
+  - name: HTTP_PROXY
+    value: "${HTTP_PROXY}"
+  - name: HTTPS_PROXY
+    value: "${HTTPS_PROXY}"
+  - name: NO_PROXY
+    value: "${NO_PROXY}"
+  selector:
+    matchLabels:
+      hive.openshift.io/job-type: provision
+---
+apiVersion: redhatcop.redhat.io/v1alpha1
+kind: PodPreset
+metadata:
+  name: hive-job-deprovision
+spec:
+  env:
+  - name: HTTP_PROXY
+    value: "http://[fe2e:6f44:51d8::134]:3128"
+  - name: HTTPS_PROXY
+    value: "http://[fe2e:6f44:51d8::134]:3128"
+  - name: NO_PROXY
+    value: ".cluster.local,.test.example.com,.svc,127.0.0.1,api-int.test.example.com,etcd-0.test.example.com,etcd-1.test.example.com,etcd-2.test.example.com,fe00:1201::/64,fe01::/48,fe02::/112,fe2e:6f44:51d8::/64,localhost"
+  selector:
+    matchLabels:
+      hive.openshift.io/job-type: deprovision

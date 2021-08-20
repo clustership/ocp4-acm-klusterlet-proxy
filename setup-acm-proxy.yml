@@ -1,0 +1,19 @@
+---
+# Setup OCP4 Helper Node
+
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_files:
+    - ./vars.yml
+
+  tasks:
+  - name: Downloading podpreset webhook
+    git:
+      repo: https://github.com/redhat-cop/podpreset-webhook
+      dest: ./podpreset-webhook
+
+  - name: Deploy podpreset webhook
+    command: make deploy IMG=quay.io/redhat-cop/podpreset-webhook:latest
+    args:
+      chdir: ./podpreset-webhook
